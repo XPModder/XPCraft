@@ -12,17 +12,16 @@ import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
 
-public final class itemXPHandler {
+public final class ItemXPHandler {
 
     @SubscribeEvent
     public static void onServerStarted(ServerStartedEvent event){
 
         LogHelper.info("ServerStartedEvent!");
 
-        itemXP.initialize();
+        ItemXP.initialize();
 
         event.getServer().sendMessage(new TextComponent("XPCraft: Calculating item xp values..."), Util.NIL_UUID);
 
@@ -32,14 +31,14 @@ public final class itemXPHandler {
 
         do{
 
-            oldCount = itemXP.getItemCount();
+            oldCount = ItemXP.getItemCount();
 
             for(Recipe recipe : manager.getRecipes()){
 
                 int totalXP = 0;
                 boolean foundAll = true;
 
-                if(itemXP.getXPForItem(recipe.getResultItem().getItem()) != -1){
+                if(ItemXP.getXPForItem(recipe.getResultItem().getItem()) != -1){
                     continue;
                 }
 
@@ -50,7 +49,7 @@ public final class itemXPHandler {
 
                         Item item = stack.getItem();
 
-                        int xp = itemXP.getXPForItem(item);
+                        int xp = ItemXP.getXPForItem(item);
                         if(xp == -1){
                             foundAll = false;
                             break;
@@ -72,21 +71,21 @@ public final class itemXPHandler {
                 if(recipe.getType() == RecipeType.SMELTING){
                     totalXP += 50;
                     Item resultItem = recipe.getResultItem().getItem();
-                    itemXP.addItem(resultItem, totalXP / (recipe.getResultItem().getCount()>0 ? recipe.getResultItem().getCount() : 1));
+                    ItemXP.addItem(resultItem, totalXP / (recipe.getResultItem().getCount()>0 ? recipe.getResultItem().getCount() : 1));
                 }
                 else if(recipe.getType() == RecipeType.CRAFTING){
                     Item resultItem = recipe.getResultItem().getItem();
-                    itemXP.addItem(resultItem, totalXP / (recipe.getResultItem().getCount()>0 ? recipe.getResultItem().getCount() : 1));
+                    ItemXP.addItem(resultItem, totalXP / (recipe.getResultItem().getCount()>0 ? recipe.getResultItem().getCount() : 1));
                 }
 
             }
 
-            currentCount = itemXP.getItemCount();
+            currentCount = ItemXP.getItemCount();
 
         }while(oldCount != currentCount);
 
         if(Reference.DEBUG){
-            itemXP.printItems();
+            ItemXP.printItems();
         }
 
         event.getServer().sendMessage(new TextComponent("XPCraft: Calculations done!"), Util.NIL_UUID);

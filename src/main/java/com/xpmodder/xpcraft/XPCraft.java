@@ -6,18 +6,13 @@ import com.xpmodder.xpcraft.block.BlockInit;
 import com.xpmodder.xpcraft.item.ItemEventHandler;
 import com.xpmodder.xpcraft.item.ItemInit;
 import com.xpmodder.xpcraft.tileentity.TileInit;
-import com.xpmodder.xpcraft.xpsystem.item.itemXP;
-import com.xpmodder.xpcraft.xpsystem.item.itemXPHandler;
-import net.minecraft.client.Minecraft;
-import net.minecraft.world.item.Items;
+import com.xpmodder.xpcraft.xpsystem.item.ItemXPHandler;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -50,7 +45,7 @@ public class XPCraft
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
 
-        MinecraftForge.EVENT_BUS.addListener(itemXPHandler::onServerStarted);
+        MinecraftForge.EVENT_BUS.addListener(ItemXPHandler::onServerStarted);
 
         MinecraftForge.EVENT_BUS.register(new ItemEventHandler());
 

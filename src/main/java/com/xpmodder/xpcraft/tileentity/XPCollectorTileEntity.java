@@ -52,7 +52,7 @@ public class XPCollectorTileEntity extends BlockEntity {
                     }
                     else if(blockState.getBlock() instanceof LeavesBlock){
                         if(!blockState.getValue(BlockStateProperties.PERSISTENT)){
-                            self.collectedXP += 1;
+                            self.collectedXP += 0.1;
                         }
                     }
                     else if(blockState.getBlock() instanceof CropBlock || blockState.getBlock() instanceof StemBlock){
@@ -65,7 +65,7 @@ public class XPCollectorTileEntity extends BlockEntity {
                         self.collectedXP += 1.5;
                     }
                     else if(blockState.getBlock() instanceof SaplingBlock){
-                        self.collectedXP += 2;
+                        self.collectedXP += 4;
                     }
                     else if(blockState.getBlock() instanceof VineBlock || blockState.getBlock() instanceof GrowingPlantBlock){
                         self.collectedXP += 1.2;
