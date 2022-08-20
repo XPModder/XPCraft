@@ -5,7 +5,6 @@ import com.xpmodder.xpcraft.Util.Reference;
 import net.minecraft.Util;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -38,18 +37,15 @@ public final class ItemXPHandler {
                 int totalXP = 0;
                 boolean foundAll = true;
 
-                if(ItemXP.getXPForItem(recipe.getResultItem().getItem()) != -1){
-                    continue;
-                }
-
                 for(Object ingred : recipe.getIngredients()){
                     Ingredient ingredient = (Ingredient) ingred;
 
-                    for(ItemStack stack : ingredient.getItems()){
+                    if(ingredient.getItems().length > 0){
 
-                        Item item = stack.getItem();
+                        Item item = ingredient.getItems()[0].getItem();
 
                         int xp = ItemXP.getXPForItem(item);
+
                         if(xp == -1){
                             foundAll = false;
                             break;
@@ -69,12 +65,26 @@ public final class ItemXPHandler {
                 }
 
                 if(recipe.getType() == RecipeType.SMELTING){
-                    totalXP += 50;
+                    totalXP += 80;
                     Item resultItem = recipe.getResultItem().getItem();
+
+                    if(ItemXP.getXPForItem(resultItem) < totalXP){
+                        if(ItemXP.getXPForItem(resultItem) != -1){
+                            continue;
+                        }
+                    }
+
                     ItemXP.addItem(resultItem, totalXP / (recipe.getResultItem().getCount()>0 ? recipe.getResultItem().getCount() : 1));
                 }
-                else if(recipe.getType() == RecipeType.CRAFTING){
+                else if(recipe.getType() == RecipeType.CRAFTING || recipe.getType() == RecipeType.STONECUTTING || recipe.getType() == RecipeType.SMITHING){
                     Item resultItem = recipe.getResultItem().getItem();
+
+                    if(ItemXP.getXPForItem(resultItem) < totalXP){
+                        if(ItemXP.getXPForItem(resultItem) != -1){
+                            continue;
+                        }
+                    }
+
                     ItemXP.addItem(resultItem, totalXP / (recipe.getResultItem().getCount()>0 ? recipe.getResultItem().getCount() : 1));
                 }
 

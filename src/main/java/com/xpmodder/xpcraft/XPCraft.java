@@ -1,5 +1,6 @@
 package com.xpmodder.xpcraft;
 
+import com.xpmodder.xpcraft.Util.ConfigHandler;
 import com.xpmodder.xpcraft.Util.LogHelper;
 import com.xpmodder.xpcraft.Util.Reference;
 import com.xpmodder.xpcraft.block.BlockInit;
@@ -11,7 +12,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.InterModComms;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
@@ -48,6 +51,9 @@ public class XPCraft
         MinecraftForge.EVENT_BUS.addListener(ItemXPHandler::onServerStarted);
 
         MinecraftForge.EVENT_BUS.register(new ItemEventHandler());
+
+
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigHandler.CONFIG);
 
     }
 
